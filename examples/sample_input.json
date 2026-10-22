@@ -1,0 +1,9 @@
+{
+  "company_name": "山田工務店",
+  "industry": "建設・リフォーム",
+  "staff_count": 8,
+  "hourly_cost": 2500,
+  "description": "住宅リフォームの受注から施工管理まで。問い合わせはホームページのフォームと電話。見積はExcelで過去案件を書き換えて作成。現場からの日報はLINEで受け取り、請求書は月末にExcelで作成してfreeeに手入力している。",
+  "pain_points": "見積作成に1件2時間かかる。月末の請求書入力と経理作業に2日取られる。日報を読んで翌日の段取りを決めるのに毎晩30分かかる。",
+  "tools_in_use": "Excel, LINE, freee, Googleカレンダー"
+}

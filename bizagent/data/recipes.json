@@ -1,0 +1,410 @@
+[
+  {
+    "id": "inquiry_triage",
+    "title": "問い合わせメール・フォームの自動仕分けと下書き返信",
+    "keywords": [
+      "問い合わせ",
+      "問合せ",
+      "問い合せ",
+      "メール",
+      "返信",
+      "入力フォーム",
+      "お問い合わせ",
+      "顧客対応",
+      "カスタマー",
+      "予約"
+    ],
+    "problem": "問い合わせの確認・振り分け・定型返信に毎日時間を取られている",
+    "solution": "受信メールを AI が分類（見積依頼／予約／クレーム／その他）し、担当者へ振り分け、返信の下書きまで作成する。送信は人が確認してから行う",
+    "tools": [
+      "Gmail / Outlook",
+      "Claude API",
+      "スプレッドシート"
+    ],
+    "hours_saved_per_week": 4.0,
+    "build_hours": 12,
+    "difficulty": 1,
+    "price_band": [
+      150000,
+      300000
+    ]
+  },
+  {
+    "id": "quote_draft",
+    "title": "見積書・提案書の自動下書き",
+    "keywords": [
+      "見積",
+      "提案書",
+      "商談",
+      "受注",
+      "営業資料",
+      "営業活動"
+    ],
+    "problem": "過去の見積を探して手で書き換えており、作成に時間がかかりミスも出る",
+    "solution": "ヒアリング内容と過去の見積データから、見積書と提案書の下書きを自動生成する。単価表はスプレッドシートで管理する",
+    "tools": [
+      "スプレッドシート",
+      "Claude API",
+      "Google ドキュメント"
+    ],
+    "hours_saved_per_week": 3.0,
+    "build_hours": 16,
+    "difficulty": 2,
+    "price_band": [
+      200000,
+      400000
+    ]
+  },
+  {
+    "id": "invoice_ocr",
+    "title": "請求書・領収書の読み取りと会計ソフトへの転記",
+    "keywords": [
+      "請求書",
+      "領収書",
+      "経理",
+      "会計",
+      "入力",
+      "転記",
+      "freee",
+      "マネーフォワード",
+      "弥生"
+    ],
+    "problem": "紙や PDF の請求書を手入力しており、月末に作業が集中する",
+    "solution": "PDF や写真から金額・取引先・日付を読み取り、会計ソフトの取り込み形式（CSV）に変換する。読み取り結果は一覧で人が確認する",
+    "tools": [
+      "Claude API（画像・PDF読み取り）",
+      "会計ソフトのCSV取込",
+      "Google ドライブ"
+    ],
+    "hours_saved_per_week": 3.0,
+    "build_hours": 16,
+    "difficulty": 2,
+    "price_band": [
+      200000,
+      400000
+    ]
+  },
+  {
+    "id": "daily_report",
+    "title": "日報・週報の自動集計と要約",
+    "keywords": [
+      "日報",
+      "週報",
+      "報告",
+      "集計",
+      "レポート",
+      "進捗"
+    ],
+    "problem": "スタッフの日報を読んで集計・要約するのに管理者の時間が取られている",
+    "solution": "日報（チャット・フォーム・スプレッドシート）を毎朝自動で集計し、要点と要注意事項を要約して管理者に送る",
+    "tools": [
+      "Slack / LINE WORKS / Chatwork",
+      "スプレッドシート",
+      "Claude API"
+    ],
+    "hours_saved_per_week": 2.5,
+    "build_hours": 10,
+    "difficulty": 1,
+    "price_band": [
+      120000,
+      250000
+    ]
+  },
+  {
+    "id": "sns_content",
+    "title": "SNS・ブログ投稿の下書き量産",
+    "keywords": [
+      "SNS",
+      "Instagram",
+      "インスタ",
+      "Twitter",
+      "ブログ",
+      "投稿",
+      "集客",
+      "広報",
+      "発信",
+      "ホームページ"
+    ],
+    "problem": "集客のための投稿を続けたいが、ネタ出しと文章作成が負担で止まりがち",
+    "solution": "店舗や商品の情報を元に、1か月分の投稿案（文章・ハッシュタグ・投稿日）を一括生成し、スプレッドシートで管理する",
+    "tools": [
+      "スプレッドシート",
+      "Claude API",
+      "Canva など"
+    ],
+    "hours_saved_per_week": 3.0,
+    "build_hours": 8,
+    "difficulty": 1,
+    "price_band": [
+      100000,
+      200000
+    ]
+  },
+  {
+    "id": "review_reply",
+    "title": "口コミ・レビューへの返信下書きと傾向分析",
+    "keywords": [
+      "口コミ",
+      "レビュー",
+      "Google マップ",
+      "評価",
+      "クレーム",
+      "低評価"
+    ],
+    "problem": "口コミへの返信が追いつかず、低評価への対応も遅れがち",
+    "solution": "新着口コミを取得し、返信文の下書きと、月次の傾向分析（不満の多い項目など）を自動で作る",
+    "tools": [
+      "Google ビジネスプロフィール",
+      "Claude API",
+      "スプレッドシート"
+    ],
+    "hours_saved_per_week": 1.5,
+    "build_hours": 10,
+    "difficulty": 2,
+    "price_band": [
+      120000,
+      250000
+    ]
+  },
+  {
+    "id": "meeting_minutes",
+    "title": "会議・商談の録音から議事録とタスク一覧を作成",
+    "keywords": [
+      "会議",
+      "議事録",
+      "打ち合わせ",
+      "商談",
+      "録音",
+      "ミーティング"
+    ],
+    "problem": "議事録作成に時間がかかり、決定事項や担当が曖昧なまま流れる",
+    "solution": "録音の文字起こしから、決定事項・宿題・担当・期限を抽出して議事録とタスク一覧を自動作成する",
+    "tools": [
+      "文字起こしツール",
+      "Claude API",
+      "Notion / スプレッドシート"
+    ],
+    "hours_saved_per_week": 2.0,
+    "build_hours": 10,
+    "difficulty": 1,
+    "price_band": [
+      120000,
+      250000
+    ]
+  },
+  {
+    "id": "shift_schedule",
+    "title": "シフト表・予定表の作成補助",
+    "keywords": [
+      "シフト",
+      "スケジュール",
+      "勤怠",
+      "出勤",
+      "人員",
+      "配置"
+    ],
+    "problem": "スタッフの希望と制約を手で調整しており、毎月数時間かかる",
+    "solution": "希望休・資格・必要人数の制約をもとにシフト案を自動生成し、管理者が微調整して確定する",
+    "tools": [
+      "スプレッドシート",
+      "Python（制約充足）",
+      "Claude API（希望の読み取り）"
+    ],
+    "hours_saved_per_week": 2.0,
+    "build_hours": 20,
+    "difficulty": 3,
+    "price_band": [
+      250000,
+      500000
+    ]
+  },
+  {
+    "id": "faq_bot",
+    "title": "社内マニュアル・よくある質問の AI 検索窓口",
+    "keywords": [
+      "マニュアル",
+      "FAQ",
+      "質問",
+      "新人",
+      "教育",
+      "引き継ぎ",
+      "属人化",
+      "ルール"
+    ],
+    "problem": "同じ質問が何度も来て、ベテランの時間が奪われる。マニュアルがあっても読まれない",
+    "solution": "社内文書を読み込ませ、チャットで質問すると根拠付きで答える窓口を作る。回答できない質問は担当者へ転送する",
+    "tools": [
+      "Claude API",
+      "社内文書（PDF / ドキュメント）",
+      "Slack / LINE WORKS"
+    ],
+    "hours_saved_per_week": 3.0,
+    "build_hours": 20,
+    "difficulty": 2,
+    "price_band": [
+      250000,
+      500000
+    ]
+  },
+  {
+    "id": "inventory_alert",
+    "title": "在庫・発注の自動集計とアラート",
+    "keywords": [
+      "在庫",
+      "発注",
+      "仕入",
+      "欠品",
+      "棚卸",
+      "商品管理"
+    ],
+    "problem": "在庫確認と発注判断が担当者の勘に頼っており、欠品や過剰在庫が起きる",
+    "solution": "販売データと在庫データから発注推奨リストを毎日作り、欠品リスクのある商品を通知する",
+    "tools": [
+      "スプレッドシート / POS の CSV",
+      "Python",
+      "Slack / メール通知"
+    ],
+    "hours_saved_per_week": 2.5,
+    "build_hours": 16,
+    "difficulty": 2,
+    "price_band": [
+      200000,
+      400000
+    ]
+  },
+  {
+    "id": "data_entry",
+    "title": "紙・PDF・メールからスプレッドシートへの転記",
+    "keywords": [
+      "転記",
+      "入力",
+      "手入力",
+      "紙の書類",
+      "FAX",
+      "PDF",
+      "エクセル",
+      "Excel",
+      "スプレッドシート"
+    ],
+    "problem": "注文書や申込書の内容を手でシステムに打ち込んでいる",
+    "solution": "書類を AI で読み取り、決まった形式で表に追記する。読み取り精度が低い項目は人が確認する欄を設ける",
+    "tools": [
+      "Claude API（画像・PDF読み取り）",
+      "スプレッドシート",
+      "Google ドライブ"
+    ],
+    "hours_saved_per_week": 4.0,
+    "build_hours": 12,
+    "difficulty": 1,
+    "price_band": [
+      150000,
+      300000
+    ]
+  },
+  {
+    "id": "recruit_screen",
+    "title": "求人応募の一次確認と面接日程の調整",
+    "keywords": [
+      "採用",
+      "求人",
+      "応募",
+      "面接",
+      "履歴書",
+      "人手不足"
+    ],
+    "problem": "応募者対応が遅れて辞退される。履歴書の確認と日程調整に時間がかかる",
+    "solution": "応募内容を要件と照らして一次確認し、面接候補日の案内メールを自動で送る（最終判断は人）",
+    "tools": [
+      "求人媒体のメール",
+      "Claude API",
+      "Google カレンダー"
+    ],
+    "hours_saved_per_week": 2.0,
+    "build_hours": 12,
+    "difficulty": 2,
+    "price_band": [
+      150000,
+      300000
+    ]
+  },
+  {
+    "id": "contract_check",
+    "title": "契約書・規約の読み合わせ補助",
+    "keywords": [
+      "契約",
+      "契約書",
+      "規約",
+      "法務",
+      "条項",
+      "リスク"
+    ],
+    "problem": "取引先から届く契約書の確認に時間がかかり、見落としが不安",
+    "solution": "契約書の要点（支払条件・解約・損害賠償・自動更新など）を抽出し、自社の標準条件との差分を一覧化する。最終判断は専門家が行う",
+    "tools": [
+      "Claude API（PDF読み取り）",
+      "Google ドキュメント"
+    ],
+    "hours_saved_per_week": 1.5,
+    "build_hours": 10,
+    "difficulty": 2,
+    "price_band": [
+      120000,
+      250000
+    ]
+  },
+  {
+    "id": "customer_followup",
+    "title": "既存顧客への定期フォロー文面と送付リストの自動作成",
+    "keywords": [
+      "リピート",
+      "顧客",
+      "フォロー",
+      "DM",
+      "再来店",
+      "LINE",
+      "メルマガ",
+      "既存"
+    ],
+    "problem": "既存客への連絡が担当者任せで、再来店や再注文の機会を逃している",
+    "solution": "購入履歴から「最終購入から N 日経過」の顧客を抽出し、個別の文面を自動で下書きする",
+    "tools": [
+      "顧客リスト（スプレッドシート / CRM）",
+      "Claude API",
+      "LINE 公式アカウント / メール"
+    ],
+    "hours_saved_per_week": 2.0,
+    "build_hours": 10,
+    "difficulty": 1,
+    "price_band": [
+      120000,
+      250000
+    ]
+  },
+  {
+    "id": "web_monitor",
+    "title": "競合・相場・ニュースの自動収集と要約",
+    "keywords": [
+      "競合",
+      "相場",
+      "価格",
+      "調査",
+      "ニュース",
+      "情報収集",
+      "市場"
+    ],
+    "problem": "競合の価格やニュースを調べる作業が属人的で、継続できない",
+    "solution": "指定サイトや検索結果を定期取得し、変化点だけを要約して週1回届ける",
+    "tools": [
+      "Python",
+      "Claude API",
+      "メール / Slack"
+    ],
+    "hours_saved_per_week": 1.5,
+    "build_hours": 12,
+    "difficulty": 2,
+    "price_band": [
+      120000,
+      250000
+    ]
+  }
+]

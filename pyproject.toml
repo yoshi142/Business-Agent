@@ -1,0 +1,31 @@
+[project]
+name = "business-agent"
+version = "0.1.0"
+description = "元手10万円から始める、AI業務自動化サービス事業の運営ツール一式"
+requires-python = ">=3.11"
+dependencies = [
+    "anthropic>=2.1.0",
+    "pydantic>=2.0",
+    "fastapi>=0.110",
+    "uvicorn>=0.20",
+    "python-multipart>=0.0.9",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "httpx>=0.27"]
+
+[project.scripts]
+bizagent = "bizagent.cli:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["bizagent*"]
+
+[tool.setuptools.package-data]
+bizagent = ["data/*.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
