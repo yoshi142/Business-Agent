@@ -232,6 +232,9 @@ def diagnose_claude(inp: DiagnosisInput, model: str = DEFAULT_MODEL) -> Diagnosi
         messages=[{"role": "user", "content": user_content}],
         output_format=DiagnosisReport,
     )
+    from .usage import record_usage
+
+    record_usage("diagnose", model, response.usage)
     if response.stop_reason == "refusal":
         raise RuntimeError("モデルが応答を拒否しました。入力内容を見直してください。")
     report = response.parsed_output

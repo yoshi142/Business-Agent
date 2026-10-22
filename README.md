@@ -7,6 +7,18 @@
 - 元手から目標までの進捗を記録する台帳とダッシュボード（ledger/）
 - サービス案内ページ（site/）
 
+## 第1関門：90日スプリント
+
+| 項目 | 値 |
+|------|----|
+| 期間 | 2026-10-22 〜 2027-01-20 |
+| 合格条件 | 期間内の売上 3万円以上 |
+| AI 利用料の上限 | 3万円 |
+| 確認 | `python -m bizagent ledger sprint` |
+
+最短の道筋は、1万円・当日納品の入口商品（SNS 投稿案、口コミ返信案、問い合わせ返信テンプレート）を3件売ることである。
+手順と文面は docs/07_sprint_90days.md、生成コマンドは下記「入口商品」を参照。
+
 ## 前提の確認
 
 「10万円を1,000万円に」は100倍である。金融商品で再現性のある手段は無いため、本リポジトリでは
@@ -24,14 +36,18 @@ docs/
   04_delivery.md        納品の手順、標準構成、効果測定、流用の仕方
   05_legal_tax.md       開業届、青色申告、インボイス、契約、Web 表示（要確認事項）
   06_weekly_review.md   週次レビューの記入欄と判断の規則
+  07_sprint_90days.md   90日スプリント：入口商品3種、日程、文面、判定の扱い
   templates/            契約骨子、提案書、失注理由の記録
 bizagent/
   diagnose.py           診断エンジン（規則ベース／Claude API）とレポート整形
   data/recipes.json     自動化レシピ15件（営業資料と診断の元データ）
-  ledger.py             台帳の集計、到達予測、ダッシュボード HTML
+  ledger.py             台帳の集計、90日スプリント判定、到達予測、ダッシュボード HTML
+  mini.py               入口商品の生成（SNS 投稿案／口コミ返信案／問い合わせテンプレート）
+  usage.py              API 利用量と概算費用（円）の記録
   web.py                診断フォームとサービス案内の Web 画面（FastAPI）
   cli.py                コマンドライン入口
 ledger/ledger.csv       台帳（初期値：2026-10-22 元手 100,000 円）
+ledger/api_usage.csv    API 利用量の記録（ツールが自動生成）
 site/index.html         サービス案内ページ
 examples/               入力例と生成したレポート例
 tests/                  pytest（17件）
@@ -53,9 +69,16 @@ python -m bizagent diagnose --json examples/sample_input.json --engine claude
 # Web 画面（診断フォーム http://127.0.0.1:8000 、案内ページ /site）
 python -m bizagent serve
 
-# 台帳
-python -m bizagent ledger add --kind income --category 診断 --amount 30000 --memo "A社"
-python -m bizagent ledger add --kind expense --category ドメイン --amount 1500
+# 入口商品（Claude API が必要。--dry-run で API を呼ばず概算費用だけ表示）
+python -m bizagent mini --dry-run sns --json examples/mini_shop.json
+python -m bizagent mini sns --json examples/mini_shop.json                       # deliverables/sns_posts.csv, .md
+python -m bizagent mini reviews --csv examples/mini_reviews.csv --name 喫茶ひだまり --business カフェ
+python -m bizagent mini inquiry --json examples/mini_business.json
+
+# 台帳（status の先頭に90日スプリントの判定が出る）
+python -m bizagent ledger sprint
+python -m bizagent ledger add --kind income --category 入口商品 --amount 10000 --memo "○○店 SNS 11月分"
+python -m bizagent ledger add --kind expense --category AI利用料 --amount 1500 --memo "Claude Code 10月分"
 python -m bizagent ledger status
 python -m bizagent ledger dashboard      # ledger/dashboard.html を生成
 
@@ -70,16 +93,16 @@ python -m pytest -q
 | heuristic | 既定。API キー不要 | 営業デモ、動作確認、レシピの検証 |
 | claude | ANTHROPIC_API_KEY があると自動選択。モデルは claude-opus-5-5（BIZAGENT_MODEL で変更可） | 顧客向けレポートのたたき台 |
 
-claude エンジンは構造化出力（pydantic モデル）で結果を受け取る。本セッションでは API キーが無かったため、claude エンジンは実際の API に対して未検証である。初回利用時に examples/sample_input.json で動作を確認すること。
+claude エンジンと入口商品の生成は構造化出力（pydantic モデル）で結果を受け取り、1回ごとの API 費を ledger/api_usage.csv に概算記録する（1回あたり数十円）。本セッションでは API キーが無かったため、API を呼ぶ部分は実際の API に対して未検証である。初回利用時に examples/sample_input.json で動作を確認すること。
 いずれのエンジンでも、数字は目安であり、ヒアリングで補正して使う前提である。
 
 ## 最初の1週間でやること
 
-1. docs/00_premise.md と 01_plan.md を読み、同意できない点があれば直す（自分の事業計画にする）。
-2. docs/05_legal_tax.md を見て、開業届と青色申告承認申請書を出す。
-3. site/index.html のフッターに事業者情報を入れ、公開する。
-4. 知人3社に無料診断を行う。`python -m bizagent diagnose --interactive` でたたき台を作り、ヒアリングで補正する。
-5. 週末に docs/06_weekly_review.md を埋め、台帳を更新する。
+1. docs/07_sprint_90days.md を読む。
+2. ANTHROPIC_API_KEY を設定し、examples/ の入力例で入口商品3種を1回ずつ生成して流れを確かめる（API 費は合計100円以下）。
+3. 知っている店・事業者を20件書き出し、3件に入口商品のサンプルを無料で作って渡す。
+4. docs/05_legal_tax.md を見て、開業届と青色申告承認申請書を出す。
+5. 週末に `python -m bizagent ledger sprint` を実行し、docs/06_weekly_review.md を埋める。
 
 ## 注意
 

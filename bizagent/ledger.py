@@ -14,6 +14,14 @@ from pathlib import Path
 
 GOAL_REVENUE_YEN = 10_000_000
 INITIAL_CAPITAL_YEN = 100_000
+
+# 90日スプリント（第1関門）：期限までに売上 3万円。AI 利用料の上限 3万円。
+SPRINT_START = date(2026, 10, 22)
+SPRINT_DAYS = 90
+SPRINT_DEADLINE = date(2027, 1, 20)
+SPRINT_GOAL_YEN = 30_000
+AI_BUDGET_YEN = 30_000
+AI_COST_CATEGORIES = ("AI利用料", "API")
 KINDS = ("capital", "income", "expense")
 FIELDS = ["date", "kind", "category", "amount", "memo"]
 DEFAULT_PATH = Path(__file__).resolve().parent.parent / "ledger" / "ledger.csv"
@@ -26,6 +34,18 @@ class Entry:
     category: str
     amount: int
     memo: str = ""
+
+
+@dataclass
+class SprintStatus:
+    as_of: date
+    day: int
+    days_left: int
+    revenue: int
+    goal: int
+    ai_spent_yen: int
+    ai_budget_yen: int
+    passed: bool
 
 
 @dataclass
@@ -123,6 +143,43 @@ def compute_status(entries: list[Entry], as_of: date | None = None, goal: int = 
         projected_goal_date=projected,
         months_to_goal=months,
     )
+
+
+def compute_sprint(entries: list[Entry], as_of: date | None = None, api_usage_yen: int | None = None) -> SprintStatus:
+    """90日スプリントの判定。AI 利用料は台帳の該当区分と api_usage.csv の概算の大きい方を採用する。"""
+    as_of = as_of or date.today()
+    in_window = [e for e in entries if SPRINT_START <= e.date <= min(as_of, SPRINT_DEADLINE)]
+    revenue = sum(e.amount for e in in_window if e.kind == "income")
+    ledger_ai = sum(e.amount for e in in_window if e.kind == "expense" and e.category in AI_COST_CATEGORIES)
+    if api_usage_yen is None:
+        from .usage import total_yen
+
+        api_usage_yen = total_yen()
+    ai_spent = max(ledger_ai, api_usage_yen)
+    day = (as_of - SPRINT_START).days + 1
+    return SprintStatus(
+        as_of=as_of,
+        day=day,
+        days_left=max(0, (SPRINT_DEADLINE - as_of).days),
+        revenue=revenue,
+        goal=SPRINT_GOAL_YEN,
+        ai_spent_yen=ai_spent,
+        ai_budget_yen=AI_BUDGET_YEN,
+        passed=revenue >= SPRINT_GOAL_YEN,
+    )
+
+
+def format_sprint(sp: SprintStatus) -> str:
+    judge = "達成" if sp.passed else ("未達（期限切れ）" if sp.days_left == 0 and sp.as_of >= SPRINT_DEADLINE else "未達")
+    need = max(0, sp.goal - sp.revenue)
+    lines = [
+        f"90日スプリント : {sp.day}日目 / {SPRINT_DAYS}日（残り {sp.days_left} 日、期限 {SPRINT_DEADLINE}）",
+        f"売上           : {sp.revenue:>9,} 円 / 目標 {sp.goal:,} 円（あと {need:,} 円）→ {judge}",
+        f"AI 利用料      : {sp.ai_spent_yen:>9,} 円 / 上限 {sp.ai_budget_yen:,} 円（残り {max(0, sp.ai_budget_yen - sp.ai_spent_yen):,} 円）",
+    ]
+    if sp.ai_spent_yen > sp.ai_budget_yen:
+        lines.append("警告           : AI 利用料が上限を超えている")
+    return "\n".join(lines)
 
 
 def format_status(s: Status) -> str:

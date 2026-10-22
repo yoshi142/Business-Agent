@@ -2,6 +2,16 @@
 
 価格はすべて税抜。消費税の扱いは 05_legal_tax.md を参照。
 
+## 0. 入口商品（1万円・税込、当日〜翌営業日納品）
+
+| 商品 | 納品物 | コマンド |
+|------|--------|---------|
+| SNS 投稿案 1か月分 | 30本の投稿文・ハッシュタグ・写真の案 | `python -m bizagent mini sns --json 店舗情報.json` |
+| 口コミ返信案 | 全口コミの返信文、要確認フラグ、傾向と改善候補 | `python -m bizagent mini reviews --csv 口コミ.csv --name 店名 --business 業態` |
+| 問い合わせ返信テンプレート10種 | 件名・本文・差し込み箇所 | `python -m bizagent mini inquiry --json 事業者情報.json` |
+
+最初の売上を作るための商品。詳細と売り方は docs/07_sprint_90days.md。必ず全文を目視で直してから納品する。
+
 ## 1. 業務自動化診断
 
 | 項目 | 内容 |
